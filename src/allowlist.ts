@@ -20,6 +20,7 @@ export const TABLAS = new Set([
   "v_cobranza_pagos", "v_cobranza_remisiones", "v_cobranza_saldos_favor",
   "v_compra_refacciones_contenedor", "v_movimientos_financieros", "v_remision_refaccion_ordenes",
   "v_saldos_cuentas", "v_stock_modelo_color",
+  "almacen_refacciones_producto_compat", "historial_conexiones", "remision_refaccion_eventos", "remision_refaccion_items",
 ]);
 
 export const RPCS = new Set([
@@ -42,6 +43,7 @@ export const RPCS = new Set([
   "revisar_incidencia_chasis", "saldo_favor_disponible_cliente", "saldo_refaccion_a_fecha",
   "saldos_atipicos_refacciones", "salidas_por_cliente_mes", "sincronizar_compat_refacciones",
   "usuarios_asignables", "ventas_mensuales_refacciones",
+  "actualizar_articulo_refaccion", "alta_articulo_refaccion", "aplicar_ajuste_rapido", "aplicar_datos_maestros_refacciones", "aplicar_pago_cobranza", "aplicar_saldo_favor", "cancelar_compra_refacciones", "cliente_tiene_cxc_vencidas", "confirmar_compra_refacciones", "confirmar_compras_refacciones", "corregir_remision_refaccion", "crear_compra_refacciones", "dividir_compra_refacciones", "guardar_almacen_inventario", "guardar_equivalente_ecount", "guardar_motivo_ajuste", "proponer_conteo_fisico", "registrar_pago_cobranza", "registrar_recepcion_refacciones", "reiniciar_datos_prueba_compras", "resolver_pendiente_compra_refacciones", "revertir_pago_cobranza", "revisar_propuesta_ajuste", "sembrar_datos_prueba_compras", "solicitar_saldo_favor", "unificar_unidades_refacciones", "validar_pago_cobranza",
 ]);
 
 export const BUCKETS = new Set([

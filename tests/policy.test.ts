@@ -60,3 +60,12 @@ test("rolDelToken lee el rol y rechaza lo que no es JWT", () => {
   assert.equal(rolDelToken("Bearer dummy"), null);
   assert.equal(rolDelToken(undefined), null);
 });
+
+test("lo que el front usa vía ayudantes también pasa (regresión «Tabla no permitida»)", () => {
+  for (const t of ["remision_refaccion_items", "remision_refaccion_eventos", "almacen_refacciones_producto_compat", "historial_conexiones"]) {
+    assert.equal(decidir("GET", `/rest/v1/${t}`).ok, true, t);
+  }
+  for (const f of ["registrar_pago_cobranza", "crear_compra_refacciones", "cliente_tiene_cxc_vencidas"]) {
+    assert.equal(decidir("POST", `/rest/v1/rpc/${f}`).ok, true, f);
+  }
+});
