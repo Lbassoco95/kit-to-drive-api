@@ -1,0 +1,62 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { decidir, moduloEncendido, rolDelToken } from "../src/policy";
+
+const jwt = (role: string) => `Bearer h.${Buffer.from(JSON.stringify({ role })).toString("base64url")}.s`;
+
+test("tabla y RPC permitidas pasan; las demás, 403", () => {
+  assert.equal(decidir("GET", "/rest/v1/remisiones").ok, true);
+  assert.equal(decidir("POST", "/rest/v1/rpc/recibir_contenedor").ok, true);
+  assert.equal(decidir("GET", "/rest/v1/pg_catalog").status, 403);
+  assert.equal(decidir("GET", "/rest/v1/").status, 403);
+  assert.equal(decidir("POST", "/rest/v1/rpc/patio_kit_set_user_role").status, 403);
+  assert.equal(decidir("POST", "/rest/v1/rpc/bridge_bitacora").status, 403);
+  assert.equal(decidir("GET", "/rest/v1/bridge_bitacora").status, 403);
+});
+
+test("no se puede escapar con rutas disfrazadas", () => {
+  assert.equal(decidir("GET", "/rest/v1/../auth/v1/admin/users").ok, false);
+  assert.equal(decidir("GET", "/rest/v1/%2e%2e/auth/v1/admin/users").ok, false);
+  assert.equal(decidir("GET", "/rest/v2/remisiones").ok, false);
+  assert.equal(decidir("GET", "/graphql/v1").ok, false);
+  assert.equal(decidir("GET", "/realtime/v1/websocket").ok, false);
+});
+
+test("auth: login y recuperar sí; registro y admin no", () => {
+  assert.equal(decidir("POST", "/auth/v1/token").ok, true);
+  assert.equal(decidir("POST", "/auth/v1/recover").ok, true);
+  assert.equal(decidir("POST", "/auth/v1/signup").status, 403);
+  assert.equal(decidir("GET", "/auth/v1/admin/users").status, 403);
+  assert.equal(decidir("POST", "/auth/v1/invite").status, 403);
+  assert.equal(decidir("GET", "/auth/v1/token").status, 405);
+});
+
+test("storage: solo buckets conocidos y nada de administrar buckets", () => {
+  assert.equal(decidir("POST", "/storage/v1/object/remisiones-docs/a/b.pdf").ok, true);
+  assert.equal(decidir("POST", "/storage/v1/object/sign/remisiones-docs/a/b.pdf").ok, true);
+  const firmada = decidir("GET", "/storage/v1/object/sign/remisiones-docs/a/b.pdf");
+  assert.equal(firmada.requiereSesion, false);
+  assert.equal(decidir("GET", "/storage/v1/object/otro-bucket/x").status, 403);
+  assert.equal(decidir("GET", "/storage/v1/bucket").status, 403);
+  assert.equal(decidir("DELETE", "/storage/v1/bucket/remisiones-docs").status, 403);
+});
+
+test("funciones de borde: solo las 4 conocidas", () => {
+  assert.equal(decidir("POST", "/functions/v1/admin-create-user").ok, true);
+  assert.equal(decidir("POST", "/functions/v1/mati-admin-bridge").status, 403);
+});
+
+test("módulo: solo las ESCRITURAS de tablas exclusivas piden módulo encendido", () => {
+  assert.equal(decidir("POST", "/rest/v1/crm_actividades").modulo, "crm");
+  assert.equal(decidir("GET", "/rest/v1/crm_actividades").modulo, undefined);
+  assert.equal(decidir("POST", "/rest/v1/clientes").modulo, undefined);
+  assert.equal(moduloEncendido("crm", new Set(["crm"])), false);
+  assert.equal(moduloEncendido("dashboard", new Set(["dashboard"])), true);
+});
+
+test("rolDelToken lee el rol y rechaza lo que no es JWT", () => {
+  assert.equal(rolDelToken(jwt("authenticated")), "authenticated");
+  assert.equal(rolDelToken(jwt("anon")), "anon");
+  assert.equal(rolDelToken("Bearer dummy"), null);
+  assert.equal(rolDelToken(undefined), null);
+});
