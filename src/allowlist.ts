@@ -4,7 +4,7 @@
 
 export const TABLAS = new Set([
   "abc_leyenda_combinaciones", "ajustes_inventario", "almacen_refacciones_productos",
-  "almacen_refacciones_producto_compat", "almacen_refacciones_unidad_alias", "almacen_refacciones_unidades", "app_modulos", "avisos",
+  "almacen_refacciones_unidad_alias", "almacen_refacciones_unidades", "app_modulos", "avisos",
   "bitacora_compras_inventario", "bitacora_eliminaciones", "bitacora_eventos", "bitacora_orden_armado",
   "categorias_financieras", "clientes", "clientes_bitacora", "clientes_comentarios",
   "cobranza_aplicaciones", "cobranza_solicitudes_saldo", "comentarios_motocarros", "compras_parametros",
