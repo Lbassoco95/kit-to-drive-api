@@ -7,6 +7,7 @@ const jwt = (role: string) => `Bearer h.${Buffer.from(JSON.stringify({ role })).
 test("tabla y RPC permitidas pasan; las demás, 403", () => {
   assert.equal(decidir("GET", "/rest/v1/remisiones").ok, true);
   assert.equal(decidir("POST", "/rest/v1/rpc/recibir_contenedor").ok, true);
+  assert.equal(decidir("POST", "/rest/v1/rpc/asignar_vendedor_remision").ok, true);
   assert.equal(decidir("GET", "/rest/v1/pg_catalog").status, 403);
   assert.equal(decidir("GET", "/rest/v1/").status, 403);
   assert.equal(decidir("POST", "/rest/v1/rpc/patio_kit_set_user_role").status, 403);
