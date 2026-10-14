@@ -14,6 +14,18 @@ test("tabla y RPC permitidas pasan; las demás, 403", () => {
   assert.equal(decidir("GET", "/rest/v1/bridge_bitacora").status, 403);
 });
 
+test("flujo de dinero: sólo la vista y las funciones flujo_*; las tablas no se tocan directo", () => {
+  assert.equal(decidir("GET", "/rest/v1/v_flujo_dinero").ok, true);
+  for (const f of ["flujo_recibir", "flujo_confirmar_caja", "flujo_aplicar", "flujo_rechazar", "flujo_mis_capacidades",
+    "flujo_listar_capacidades", "flujo_asignar_capacidad", "flujo_cuentas", "flujo_clientes", "flujo_remisiones_para_aplicar"]) {
+    assert.equal(decidir("POST", `/rest/v1/rpc/${f}`).ok, true, f);
+  }
+  assert.equal(decidir("GET", "/rest/v1/flujo_dinero").status, 403);
+  assert.equal(decidir("PATCH", "/rest/v1/flujo_dinero").status, 403);
+  assert.equal(decidir("GET", "/rest/v1/flujo_capacidades").status, 403);
+  assert.equal(decidir("POST", "/rest/v1/rpc/flujo_dinero_sin_borrar").status, 403);
+});
+
 test("no se puede escapar con rutas disfrazadas", () => {
   assert.equal(decidir("GET", "/rest/v1/../auth/v1/admin/users").ok, false);
   assert.equal(decidir("GET", "/rest/v1/%2e%2e/auth/v1/admin/users").ok, false);
@@ -59,4 +71,13 @@ test("rolDelToken lee el rol y rechaza lo que no es JWT", () => {
   assert.equal(rolDelToken(jwt("anon")), "anon");
   assert.equal(rolDelToken("Bearer dummy"), null);
   assert.equal(rolDelToken(undefined), null);
+});
+
+test("lo que el front usa vía ayudantes también pasa (regresión «Tabla no permitida»)", () => {
+  for (const t of ["remision_refaccion_items", "remision_refaccion_eventos", "almacen_refacciones_producto_compat", "historial_conexiones"]) {
+    assert.equal(decidir("GET", `/rest/v1/${t}`).ok, true, t);
+  }
+  for (const f of ["registrar_pago_cobranza", "crear_compra_refacciones", "cliente_tiene_cxc_vencidas"]) {
+    assert.equal(decidir("POST", `/rest/v1/rpc/${f}`).ok, true, f);
+  }
 });
