@@ -4,7 +4,7 @@
 
 export const TABLAS = new Set([
   "abc_leyenda_combinaciones", "ajustes_inventario", "almacen_refacciones_productos",
-  "almacen_refacciones_unidad_alias", "almacen_refacciones_unidades", "app_modulos", "avisos",
+  "almacen_refacciones_producto_compat", "almacen_refacciones_unidad_alias", "almacen_refacciones_unidades", "app_modulos", "avisos",
   "bitacora_compras_inventario", "bitacora_eliminaciones", "bitacora_eventos", "bitacora_orden_armado",
   "categorias_financieras", "clientes", "clientes_bitacora", "clientes_comentarios",
   "cobranza_aplicaciones", "cobranza_solicitudes_saldo", "comentarios_motocarros", "compras_parametros",
@@ -25,11 +25,11 @@ export const TABLAS = new Set([
 export const RPCS = new Set([
   "actualizar_envio_remision_refaccion", "ajustar_capacidad_color", "ajustar_unidades_remision",
   "asignar_motocarro_a_remision", "asignar_remision_items", "cambiar_color_chasis",
-  "cambiar_orden_armado", "cancelar_linea_refaccion", "cancelar_remision_refacciones",
+  "cambiar_orden_armado", "cancelar_linea_refaccion", "cancelar_remision_refacciones", "definir_compatibilidades_articulo",
   "capturar_seriales_unidad", "compras_parametro", "configurar_pedido_remision", "configurar_unidad",
   "confirmar_fecha_entrega", "confirmar_sin_existencia_refaccion", "crear_motocarro_ya_armado",
   "crear_remision_refacciones", "cxc_vencidas_resumen", "desasignar_motocarro_de_remision",
-  "desconfigurar_unidad", "entregar_remision_refaccion", "es_usuario_prueba",
+  "desconfigurar_unidad", "eliminar_articulo_refaccion", "eliminar_compra_refacciones", "entregar_remision_refaccion", "es_usuario_prueba",
   "estado_cobro_remision_refaccion", "importar_almacen_refacciones", "importar_motores_inventario",
   "importar_packing_list", "importar_vins_inventario", "intercambiar_color_chasis",
   "kardex_refaccion", "liberar_refaccion_remision", "marcar_pago_remision_con_evidencia",
