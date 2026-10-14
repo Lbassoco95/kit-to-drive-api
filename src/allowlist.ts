@@ -26,11 +26,11 @@ export const TABLAS = new Set([
 export const RPCS = new Set([
   "actualizar_envio_remision_refaccion", "ajustar_capacidad_color", "ajustar_unidades_remision",
   "asignar_motocarro_a_remision", "asignar_remision_items", "cambiar_color_chasis",
-  "cambiar_orden_armado", "cancelar_linea_refaccion", "cancelar_remision_refacciones",
+  "cambiar_orden_armado", "cancelar_linea_refaccion", "cancelar_remision_refacciones", "definir_compatibilidades_articulo",
   "capturar_seriales_unidad", "compras_parametro", "configurar_pedido_remision", "configurar_unidad",
   "confirmar_fecha_entrega", "confirmar_sin_existencia_refaccion", "crear_motocarro_ya_armado",
   "crear_remision_refacciones", "cxc_vencidas_resumen", "desasignar_motocarro_de_remision",
-  "desconfigurar_unidad", "entregar_remision_refaccion", "es_usuario_prueba",
+  "desconfigurar_unidad", "eliminar_articulo_refaccion", "eliminar_compra_refacciones", "entregar_remision_refaccion", "es_usuario_prueba",
   "estado_cobro_remision_refaccion", "flujo_aplicar", "flujo_asignar_capacidad", "flujo_clientes",
   "flujo_confirmar_caja", "flujo_cuentas", "flujo_listar_capacidades", "flujo_mis_capacidades",
   "flujo_recibir", "flujo_rechazar", "flujo_remisiones_para_aplicar", "importar_almacen_refacciones", "importar_motores_inventario",
