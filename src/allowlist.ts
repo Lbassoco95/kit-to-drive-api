@@ -10,6 +10,7 @@ export const TABLAS = new Set([
   "cobranza_aplicaciones", "cobranza_solicitudes_saldo", "comentarios_motocarros", "compras_parametros",
   "compras_refacciones", "config_general", "contenedores", "crm_actividades", "crm_oportunidades",
   "crm_ruta_paradas", "crm_rutas", "cuentas_financieras", "cuentas_por_cobrar", "cxc_abonos",
+  "firmas_firmantes", "firmas_solicitudes",
   "incidencias_chasis", "incidencias_chasis_eventos", "inventario_almacenes", "inventario_chasis",
   "inventario_colores", "inventario_motivos_ajuste", "inventario_motor", "inventario_partes",
   "modelos_producto", "motocarros", "movimiento_adjuntos", "movimiento_bitacora",
@@ -49,11 +50,12 @@ export const RPCS = new Set([
 ]);
 
 export const BUCKETS = new Set([
-  "actividades-evidencia", "comentarios-fotos", "evidencias-compras", "remisiones-docs",
+  "actividades-evidencia", "comentarios-fotos", "evidencias-compras", "remisiones-docs", "firmas",
 ]);
 
 export const FUNCIONES = new Set([
   "admin-create-user", "admin-reset-user-password", "admin-update-user", "complete-password-change",
+  "firmas",
 ]);
 
 // Rutas de autenticación permitidas (no hay registro público ni rutas admin).

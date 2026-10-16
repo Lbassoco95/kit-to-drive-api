@@ -82,3 +82,13 @@ test("lo que el front usa vía ayudantes también pasa (regresión «Tabla no pe
     assert.equal(decidir("POST", `/rest/v1/rpc/${f}`).ok, true, f);
   }
 });
+
+test("firmas electrónicas: tablas, bucket y la función firmas con sesión", () => {
+  assert.equal(decidir("GET", "/rest/v1/firmas_solicitudes").ok, true);
+  assert.equal(decidir("GET", "/rest/v1/firmas_firmantes").ok, true);
+  assert.equal(decidir("POST", "/storage/v1/object/sign/firmas/abc/original.pdf").ok, true);
+  const f = decidir("POST", "/functions/v1/firmas");
+  assert.equal(f.ok, true);
+  assert.equal(f.requiereSesion, true);
+  assert.equal(decidir("GET", "/rest/v1/firmas_usuario").status, 403);
+});
